@@ -75,9 +75,9 @@ echo "Sleeping 10 seconds to allow policy to attach to role"
 sleep 10s
 
 echo "Creating Lambda function"
-aws lambda create-function --function-name dataPull --runtime python3.7 --role  arn:aws:iam::$AWS_ID":"role/lambda-s3-role --handler lambda_function.lambda_handler --zip-file fileb://myDeploymentPackage.zip  --timeout 60 --output text >> setup.log
+aws lambda create-function --function-name dataPull --runtime python3.10 --role  arn:aws:iam::$AWS_ID":"role/lambda-s3-role --handler lambda_function.lambda_handler --zip-file fileb://myDeploymentPackage.zip  --timeout 60 --output text >> setup.log
 
-echo "Creating cloudwatch rule to schedule lambda every 5 minutes"
+echo "Creating cloudwatch rule to schedule lambda every 20 minutes"
 aws events put-rule --name my-scheduled-rule --schedule-expression 'rate(20 minutes)' --output text >> setup.log
 
 echo "Attaching lambda function to event and then to the rule"
