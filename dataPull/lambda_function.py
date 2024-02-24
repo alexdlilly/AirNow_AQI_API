@@ -6,7 +6,7 @@ import boto3
 
 s3_client = boto3.client("s3")
 LOCAL_FILE_SYS = "/tmp"
-S3_BUCKET = "AQI-DATA-S3"
+S3_BUCKET = "airnow-s3"
 
 def make_key():
     return datetime.utcnow().strftime("%Y-%m-%dT%H-%M")
