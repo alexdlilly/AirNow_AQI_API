@@ -61,8 +61,9 @@ def write_to_local(df, key):
     return filename
 
 def lambda_handler(event, context):
-    file_name = write_to_local(parse_dataframe(get_recent_data()), make_key())
-    s3_client.upload_file(LOCAL_FILE_SYS + "/" + file_name, S3_BUCKET)
+    key = make_key()
+    file_name = write_to_local(parse_dataframe(get_recent_data()),key)
+    s3_client.upload_file(file_name, S3_BUCKET, key)
 
 
 
