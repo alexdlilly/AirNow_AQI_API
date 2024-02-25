@@ -22,7 +22,7 @@ def get_recent_data():
     options["data_type"] = "b"
     options["format"] = "application/json"
     options["ext"] = "json"
-    options["api_key"] = "<ADD_API_KEY>"
+    options["api_key"] = "EB883725-96B2-407E-AAD0-7D4FFEF22290"
     options['includerawconcentrations'] = "1"
     options["start_date"] = starttime.strftime("%Y-%m-%dT%H:%M")
     options["end_date"] = endtime.strftime("%Y-%m-%dT%H:%M")
@@ -45,15 +45,15 @@ def get_recent_data():
 
 def parse_dataframe(df):
     df_parse = pd.DataFrame()
-#    for parameter in df['Parameter'].unique():
-#        df_param = df.loc[df['Parameter'] == parameter]
-#        df_param = df_param.rename({'Unit':f'Unit_{parameter}','Value':f'Value_{parameter}','AQI':f'AQI_{parameter}','Category':f'Category_{parameter}'},axis=1)
-#        df_param = df_param.drop(labels = 'Parameter',axis=1)
-#        if len(df_parse) > 0:
-#            df_parse = df_param.merge(df_parse, on=['Latitude','Longitude','UTC'],how='outer')
-#        else:
-#            df_parse = df_param
-    df_parse = df
+    for parameter in df['Parameter'].unique():
+        df_param = df.loc[df['Parameter'] == parameter]
+        df_param = df_param.rename({'Unit':f'Unit_{parameter}','Value':f'Value_{parameter}','AQI':f'AQI_{parameter}','Category':f'Category_{parameter}'},axis=1)
+        df_param = df_param.drop(labels = 'Parameter',axis=1)
+        if len(df_parse) > 0:
+            df_parse = df_param.merge(df_parse, on=['Latitude','Longitude','UTC'],how='outer')
+        else:
+            df_parse = df_param
+#    df_parse = df
     return df_parse
 
 def write_to_local(df, key):
@@ -65,7 +65,3 @@ def lambda_handler(event, context):
     key = make_key()
     file_name = write_to_local(parse_dataframe(get_recent_data()), key)
     s3_client.upload_file(file_name, S3_BUCKET, key)
-
-
-
-
