@@ -60,7 +60,10 @@ zip -r ../myDeploymentPackage.zip .
 cd ..
 
 echo "Creating bucket "$1""
-aws s3api create-bucket --acl public-read-write --bucket $1 --output text > setup.log
+aws s3api create-bucket \
+    --bucket $1 \
+    --region us-east-1 \
+    --output text > setup.log
 
 echo "Creating Policy"
 aws iam create-policy --policy-name AWSLambdaS3Policy --policy-document file://policy --output text >> setup.log
