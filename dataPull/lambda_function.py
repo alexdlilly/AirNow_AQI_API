@@ -16,27 +16,30 @@ def get_recent_data():
     starttime = endtime - timedelta(hours = 0.5)
     
     options = {}
-    options["url"] = "https://airnowapi.org/aq/data/"
-    options["parameters"] = "o3,pm25,pm10,co,no2,so2"
+    options["url"] = "https://www.airnowapi.org/aq/data/"
+    options["parameters"] = "OZONE,PM25,PM10,CO,NO2,SO2"
     options["bbox"] = "-180,-90, 180,90"
-    options["data_type"] = "b"
+    options["data_type"] = "B"
     options["format"] = "application/json"
     options["ext"] = "json"
-    options["api_key"] = "EB883725-96B2-407E-AAD0-7D4FFEF22290"
-    options['includerawconcentrations'] = "1"
-    options["start_date"] = starttime.strftime("%Y-%m-%dT%H:%M")
-    options["end_date"] = endtime.strftime("%Y-%m-%dT%H:%M")
-    
+    options["API_KEY"] = "EB883725-96B2-407E-AAD0-7D4FFEF22290"
+    options['includerawconcentrations'] = "0"
+    options["start_date"] = starttime.strftime("%Y-%m-%dT%H")
+    options["end_date"] = endtime.strftime("%Y-%m-%dT%H")
+    options['monitorType'] = "2"
+    options['verbose'] = "0"
     # API request URL
     REQUEST_URL = options["url"] \
-                  + "?startdate=" + options["start_date"] \
-                  + "&enddate=" + options["end_date"] \
+                  + "?startDate=" + options["start_date"] \
+                  + "&endDate=" + options["end_date"] \
                   + "&parameters=" + options["parameters"] \
-                  + "&bbox=" + options["bbox"] \
-                  + "&datatype=" + options["data_type"] \
+                  + "&BBOX=" + options["bbox"] \
+                  + "&dataType=" + options["data_type"] \
                   + "&format=" + options["format"] \
-                  + "&api_key=" + options["api_key"] \
-                  + "&includerawconcentrations" + options["includerawconcentrations"]
+                  + "&verbose=" + options['verbose'] \
+                + "&monitorType=" + options['monitorType'] \
+                  + "&includerawconcentrations=" + options["includerawconcentrations"]\
+                  + "&API_KEY=" + options["API_KEY"] 
     
     r = requests.get(REQUEST_URL)
     data = json.loads(r.text)
