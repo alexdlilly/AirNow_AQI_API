@@ -22,7 +22,7 @@ def get_recent_data():
     options["data_type"] = "B"
     options["format"] = "application/json"
     options["ext"] = "json"
-    options["API_KEY"] = "EB883725-96B2-407E-AAD0-7D4FFEF22290"
+    options["API_KEY"] = "<YOUR_API_KEY>"
     options['includerawconcentrations'] = "0"
     options["start_date"] = starttime.strftime("%Y-%m-%dT%H")
     options["end_date"] = endtime.strftime("%Y-%m-%dT%H")
